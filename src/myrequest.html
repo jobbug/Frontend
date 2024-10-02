@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>요청 내역 상세보기</title>
+</head>
+<body>
+    <div class="content-container">
+        <!-- 왼쪽 요청 내역 보기 -->
+        <div class="box request-history-box">
+            <h2>요청 내역 보기</h2>
+            <a href="mypage.html" class="back-button">마이페이지로 돌아가기</a>
+            <hr class="divider">
+            <div class="total-count">총 <span style="color: green;">15</span>회</div>
+            <ul class="history-list">
+                <!-- 최대 7개까지 표시하며 초과 시 스크롤 -->
+                <li class="history-item" onclick="showDetails('2024/8/29', '서울특별시 노원구', '바퀴벌레', '5/5', 'profile-image.jpg')">
+                    <div class="history-details">
+                        <span class="date">2024/8/29</span><br>
+                        <span class="bug-type">바퀴벌레</span><br>
+                        <span class="rating">평점: 5/5</span>
+                    </div>
+                    <button class="arrow-button">→</button>
+                </li>
+                <!-- 추가 항목 -->
+                <!-- 나머지 항목은 클릭 시마다 상세정보가 업데이트되도록 설정 -->
+            </ul>
+        </div>
+
+        <!-- 오른쪽 요청 상세 내용 -->
+        <div class="box review-box">
+            <h2 id="review-title">인선이벌레좋아해님</h2>
+            <hr class="divider">
+            <div id="review-picture" class="review-picture">사진</div>
+            <div class="review-content-box">
+                <p id="review-text" class="review-text">"정말 너무 친절하시고 벌레도 빠르게 잡아주셔서 감사합니다....ㅠㅠㅠㅠ"</p>
+                <div class="review-info">
+                    <img id="profile-picture" src="profile-image.jpg" alt="프로필 사진" class="review-profile-picture">
+                    <div class="review-meta">
+                        <div id="review-date">2024/8/29 오후 6:43</div>
+                        <div id="review-address">서울특별시 노원구</div>
+                        <div id="review-bug-type">바퀴벌레</div>
+                        <div id="review-rating">평점 5/5 <span class="stars">★★★★★</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showDetails(date, address, bugType, rating, image) {
+            document.getElementById('review-date').innerText = date;
+            document.getElementById('review-address').innerText = address;
+            document.getElementById('review-bug-type').innerText = bugType;
+            document.getElementById('review-rating').innerText = '평점 ' + rating;
+            document.getElementById('review-picture').innerText = "사진";
+            document.getElementById('profile-picture').src = image;
+        }
+    </script>
+</body>
+</html>
