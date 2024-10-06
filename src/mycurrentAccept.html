@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>진행 중 수락 내역 보기</title>
+    <link rel="stylesheet" href="mycurrentAccept.css">
+</head>
+<body>
+    <div class="content-container">
+        <!-- 왼쪽 박스: 진행 중 수락 내역 -->
+        <div class="box accept-history-box">
+            <div class="header">
+                <div class="total-count">
+                    <h2>진행 중 수락 내역 보기</h2>
+                    <h3>총 <span class="count">2</span>회</h3>
+                </div>
+                <div class="back-button-container">
+                    <button class="back-button" onclick="window.location.href='mypage.html'">마이페이지로 돌아가기</button>
+                    <button class="back-button" onclick="window.location.href='mycurrentRequest.html'">진행 중 요청 내역 보기</button>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <ul class="history-list">
+                <li class="history-item" onclick="window.location.href='request-detail.html'">
+                    <span>2024/8/29 바퀴벌레</span>
+                    <span class="arrow-button">→</span>
+                </li>
+                <li class="history-item" onclick="window.location.href='request-detail.html'">
+                    <span>2024/8/27 바퀴벌레</span>
+                    <span class="arrow-button">→</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 오른쪽 박스: 현재 요청 정보 -->
+        <div class="box request-info-box">
+            <div class="header">
+                <h3><span class="nickname">세연이벌레싫어해</span>님의 요청</h3>
+                <button class="chat-button" onclick="window.location.href='chat.html'">채팅방으로 이동하기</button>
+            </div>
+            <div class="divider"></div>
+            <div class="review-picture">사진</div>
+            <p>2024/9/17<br>오후 6:40 ~ 오후 7:00</p>
+            <p>서울특별시 공릉로 41563가길 4908<br>블랑로즈드빌 456호</p>
+            <p>바퀴벌레</p>
+        </div>
+    </div>
+</body>
+</html>

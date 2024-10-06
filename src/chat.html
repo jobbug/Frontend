@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>채팅 페이지</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+
+    <div class="chat-container">
+        <!-- 채팅 목록 -->
+        <div class="chat-list">
+            <h3>채팅 목록</h3>
+            <ul id="chat-list-ul">
+                <li class="chat-item">
+                    <img src="프로필1.png" alt="프로필 이미지" class="profile-img">
+                    <div class="chat-info">
+                        <p>인선이벌레좋아해</p>
+                        <span>New event</span>
+                        <span>2024년 8월 8일</span>
+                    </div>
+                </li>
+                <!-- 나머지 채팅 목록 항목들 추가 -->
+            </ul>
+        </div>
+
+        <!-- 채팅 창 -->
+        <div class="chat-window">
+            <div class="chat-header">
+                <h2 id="chat-title">인선이벌레좋아해</h2>
+            </div>
+
+            <!-- 버튼들과 구분선 -->
+            <div id="chat-buttons" class="chat-buttons">
+                <!-- JavaScript로 동적으로 버튼 추가 -->
+            </div>
+
+            <!-- 메시지 창 -->
+            <div class="chat-body">
+                <div class="message received">상대방의 메시지</div>
+                <div class="message sent">내 메시지</div>
+            </div>
+
+            <!-- 메시지 입력 창 -->
+            <div class="chat-input">
+                <input type="text" placeholder="메시지를 입력하세요." />
+                <button>보내기</button>
+            </div>
+        </div>
+
+        <!-- 상대방 프로필 정보 -->
+        <div class="profile-section">
+            <div class="profile-header">
+                <img src="상대방_프로필_이미지.png" alt="프로필 이미지" class="profile-image">
+                <h3 id="profile-name">인선이벌레좋아해</h3>
+                <p id="profile-badge">배지 정보</p>
+            </div>
+
+            <div class="profile-stats">
+                <p id="success-count">총 성공 횟수: 73회</p>
+                <p id="bug-info">가장 많이 잡은 벌레: 바퀴벌레</p>
+            </div>
+
+            <div class="request-history">
+                <h4>수락 내역</h4>
+                <ul id="request-history-ul">
+                    <li>
+                        <span>2024/8/29 바퀴벌레 평점: 5/5</span>
+                        <button>자세히 보기</button>
+                    </li>
+                    <!-- 나머지 내역들 추가 -->
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function loadChat(isRequestor) {
+            const chatTitle = document.getElementById('chat-title');
+            const chatButtons = document.getElementById('chat-buttons');
+            const profileName = document.getElementById('profile-name');
+            const successCount = document.getElementById('success-count');
+            const bugInfo = document.getElementById('bug-info');
+
+            chatButtons.innerHTML = ''; // 버튼 초기화
+
+            if (isRequestor) {
+                // 요청자일 때
+                chatTitle.innerText = '상대닉네임 님';
+                profileName.innerText = '수락자 프로필';
+                successCount.innerText = '총 성공 횟수: 15회';
+                bugInfo.innerText = '가장 많이 잡은 벌레: 바퀴벌레';
+
+                chatButtons.innerHTML += `<button class="request-button">예약요청<br>보내기</button>`;
+                chatButtons.innerHTML += `<button class="request-button">예약요청<br>상세보기</button>`;
+                chatButtons.innerHTML += `<button class="photo-button">사진<br>보내기</button>`;
+                chatButtons.innerHTML += `<button class="feedback-button">후기<br>작성하기</button>`;
+            } else {
+                // 수락자일 때
+                chatTitle.innerText = '상대닉네임 님';
+                profileName.innerText = '요청자 프로필';
+                successCount.innerText = '총 성공 횟수: 73회';
+                bugInfo.innerText = '가장 많이 잡은 벌레: 바퀴벌레';
+
+                chatButtons.innerHTML += `<button class="request-detail-button">예약요청<br>상세보기</button>`;
+                chatButtons.innerHTML += `<button class="photo-button">사진<br>보내기</button>`;
+                chatButtons.innerHTML += `<button class="feedback-request-button">후기<br>요청하기</button>`;
+            }
+        }
+
+        // 요청자(true) 또는 수락자(false)로 화면 로드
+        loadChat(true);  // true면 요청자, false면 수락자
+    </script>
+
+</body>
+</html>

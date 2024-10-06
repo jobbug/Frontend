@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mypage.css">
     <title>mypage</title>
 </head>
-<body>
+<body class="mypage">
     <div class="content-container">
         <!-- 프로필 카드 -->
         <div class="box profile-box">
@@ -22,8 +22,30 @@
         <div class="box current-box">
             <div class="status-title">진행 중인 요청/수락</div>
             <div class="status-detail">세연이벌레싫어해님의 요청 수락중</div>
-            <a href="mycurrent.html" class="detail-button">상세보기</a>
-            <hr class="divider">
+            <a href="#" class="detail-button" id="detailButton">상세보기</a>
+
+            <script>
+            // 최근 수락 여부와 요청 여부를 localStorage에 저장된 데이터로 가정
+            // 서버에서 데이터 가져오는 부분은 API와 함께 구현할 수 있습니다.
+            // 예시: 'recentAction' 값이 'accept'이면 수락 진행중, 'request'이면 요청 진행중.
+            let recentAction = localStorage.getItem('recentAction'); 
+            
+            document.getElementById('detailButton').addEventListener('click', function(event) {
+                event.preventDefault(); // 기본 동작 막기
+            
+                if (recentAction === 'accept') {
+                    // 최근에 수락을 진행했으면 mycurrentAccept.html로 이동
+                    window.location.href = 'mycurrentAccept.html';
+                } else if (recentAction === 'request') {
+                    // 최근에 요청을 했으면 mycurrentRequest.html로 이동
+                    window.location.href = 'mycurrentRequest.html';
+                } else {
+                    // 수락 또는 요청 정보가 없을 경우 기본 페이지로 이동 (예: mycurrent.html)
+                    window.location.href = 'mycurrent.html';
+                }
+            });
+            </script>
+                        <hr class="divider">
             <div class="badge">
                 <span>🏴 바퀴벌레 학살자</span>
                 <span>❤️ 고수</span>
