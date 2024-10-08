@@ -12,6 +12,7 @@
         <!-- 채팅 목록 -->
         <div class="chat-list">
             <h3>채팅 목록</h3>
+            <hr class="divider"> <!-- 구분선 추가 -->
             <ul id="chat-list-ul">
                 <li class="chat-item">
                     <img src="프로필1.png" alt="프로필 이미지" class="profile-img">
@@ -52,8 +53,9 @@
         <!-- 상대방 프로필 정보 -->
         <div class="profile-section">
             <div class="profile-header">
+                <h3 id="profile-name">프로필</h3>
+                <hr class="divider">
                 <img src="상대방_프로필_이미지.png" alt="프로필 이미지" class="profile-image">
-                <h3 id="profile-name">인선이벌레좋아해</h3>
                 <p id="profile-badge">배지 정보</p>
             </div>
 
@@ -62,6 +64,7 @@
                 <p id="bug-info">가장 많이 잡은 벌레: 바퀴벌레</p>
             </div>
 
+            <hr class="divider"> <!-- 구분선 추가 -->
             <div class="request-history">
                 <h4>수락 내역</h4>
                 <ul id="request-history-ul">
@@ -88,7 +91,6 @@
             if (isRequestor) {
                 // 요청자일 때
                 chatTitle.innerText = '상대닉네임 님';
-                profileName.innerText = '수락자 프로필';
                 successCount.innerText = '총 성공 횟수: 15회';
                 bugInfo.innerText = '가장 많이 잡은 벌레: 바퀴벌레';
 

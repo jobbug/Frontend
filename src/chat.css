@@ -88,7 +88,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
     border-bottom: 1px solid #e0e0e0; /* 구분선 추가 */
 }
 
@@ -208,8 +208,9 @@ body {
     cursor: pointer;
 }
 
+/* 구분선 */
 .divider {
     margin: 15px 0;
     border: none;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #e0e0e0; /* 구분선 스타일 */
 }
