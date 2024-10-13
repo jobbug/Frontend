@@ -1,0 +1,36 @@
+/* card 스타일 수정 */
+
+
+.card-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 10px; /* 상단에 간격 추가 */
+  align-self: flex-end; /* 숫자를 오른쪽에 배치 */
+}
+
+.plus-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px;
+  width: 24px;
+  height: 24px;
+}
+
+.three-icon {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+}
+
+/* 카드별 배경색 설정 */
+.teal { background-color: #4f8a8b; }
+.green { background-color: #6b8e23; }
+.yellow { background-color: #e6c06e; }
+
+

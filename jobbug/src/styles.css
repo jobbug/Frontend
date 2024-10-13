@@ -1,0 +1,918 @@
+/* App 전체 레이아웃 */
+.app-container {
+    display: flex; /* Sidebar와 Main Content를 나란히 배치 */
+    height: 100vh; /* 화면 전체 높이를 채움 */
+    width: 100%; /* 화면 전체 너비를 채움 */
+    overflow: hidden; /* 넘치는 부분 숨기기 */
+}
+
+/* 슬라이딩바 제거 및 여백 최적화 */
+body {
+    margin: 10;
+    font-family: 'Arial', sans-serif;
+    background-color: #F7F8FC;
+    overflow: hidden; /* 화면 넘침 방지 */
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden; /* 화면 넘침 방지 */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 사이드바 스타일 */
+.sidebar {
+    width: 300px;
+    background-color: #FFFFFF;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0; /* 사이드바의 불필요한 여백 제거 */
+    height: 100vh;
+    position: fixed; /* Sidebar를 고정 */
+    z-index: 2; /* Sidebar를 최상단으로 고정 */
+    overflow-y: auto; /* 세로 스크롤을 가능하게 함 */
+    scrollbar-width: none; /* Optional: Adjust the width of the scrollbar */
+
+}
+
+.menu-icon {
+    width: 20px; /* 아이콘 크기 */
+    height: 20px;
+    margin-right: 8px; /* 아이콘과 텍스트 간 간격 */
+    vertical-align: middle;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+    width: 100%;
+}
+
+.menu li {
+    margin: 10px 0;
+}
+
+.menu li a {
+    padding: 10px 20px;
+    display: block;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.menu li a.active, .menu li a:hover {
+    background-color: #EFEFEF;
+}
+
+.info-cards {
+    width: 100%;
+}
+
+
+.card {
+    background-color: #E8E8E8;
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 10px ;
+    margin-right: 10px ;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 변경 */
+    align-items: flex-start; /* 왼쪽 정렬 */
+    position: relative; /* plus-icon-btn의 위치를 조정하기 위해 필요 */
+    width: 80%; /* 카드의 너비를 꽉 채우도록 설정 */
+    height: auto; /* 높이를 자동으로 조정 */
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1); /* 카드 그림자 */
+  }
+
+/* 카드의 제목과 아이콘을 포함하는 헤더 */
+.card-header {
+    font-size: 1.2rem;
+    color: #ffffff;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-between; /* '빠른 후기 작성하기'와 삼지창 아이콘 간 간격 조정 */
+    width: 100%;
+    margin-bottom: 10px; /* 제목과 숫자 사이의 간격을 더 넓게 설정 */
+}
+
+.card-value {
+    font-size: 8rem; /* 숫자를 더 크게 만듭니다 */
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 45px; /* 제목과 숫자 사이의 간격을 늘려줍니다 */
+    margin-left: 8px;
+    text-align: left; /* 좌측 정렬 */
+}
+
+.teal { background-color: #588A87; }
+.green { background-color: #B6C6B2; }
+.yellow { background-color: #FFDA7E; }
+
+.card-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-left: 8px;
+    margin-top: 8px; /* 제목과 숫자 사이의 간격 */
+    text-align: left; /* 좌측 정렬 */
+}
+
+/* 모달 스타일 */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 100%;
+}
+
+/* + 버튼 스타일 */
+.plus-icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    position: absolute; /* 부모 요소(card)에 대한 절대 위치 */
+    right: 15px; /* 오른쪽에서의 거리 */
+    bottom: 20px; /* 아래에서의 거리 */
+    padding: 5px;
+    width: 36px; 
+    height: 36px;
+    z-index: 1; /* 다른 요소 위에 노출되도록 */
+}
+
+/* 삼지창 아이콘 스타일 */
+.three-icon {
+    position: absolute;
+    right: 22px; 
+    top: 22px; 
+    width: 20px;
+    height: 20px;
+}
+
+.support {
+    margin-top: auto;
+    padding: 10px 0;
+}
+
+/* 메인 컨텐츠 스타일 */
+.main-content-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* 남은 공간을 메인 콘텐츠가 차지하게 함 */
+    height: 100%;
+    overflow-y: auto;
+    margin-left: 300px; /* 사이드바 너비만큼 조정 */
+    padding: 20px;
+    background-color: #F7F8FC;
+}
+
+.main-content {
+    padding: 20px; /* 여백을 추가 */
+    background-color: #F7F8FC;
+    flex: 1;
+    overflow-y: auto; /* 내용이 많을 경우 스크롤 추가 */
+}
+
+/* header 스타일 수정 */
+.header {
+    padding: 10px 100px; /* 상하 패딩을 줄여서 좀 더 컴팩트하게 */
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-bottom: 1px solid #E8E8E8; /* 아래쪽에 연한 회색 줄 추가 */
+    position: fixed;
+    z-index: 3; /* Sidebar보다 높게 설정 */
+    width: 600px;/* 전체 너비에서 사이드바 너비만큼 뺀 값 */
+    top: 0; /* 화면의 맨 위에 고정 */
+    right: 0;
+    height: 60px; /* 헤더의 높이 설정 */
+    background-color: #F7F8FC;
+}
+
+.auth-links {
+    display: flex;
+    gap: 30px; /* 링크 간격 */
+    align-items: center;
+}
+
+.auth-links a {
+    margin: 0 10px;
+    color: #333; /* 글자 색상을 검정으로 */
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%; /* 둥근 모양 */
+    margin-left: 20px; /* 닉네임과 이미지 사이에 간격 추가 */
+}
+
+.home-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px; /* 내부에 여백 추가 */
+    margin-top: 70px; /* Sidebar와 간격 조정 */
+    width: 1100px;
+    box-sizing: border-box; /* 전체 요소 너비를 포함한 크기 계산 */
+}
+
+
+.job-list {
+    width: 60%;
+    margin-right: 10px;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table th, table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+.badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.badge.orange { background-color: #FFA726; }
+.badge.red { background-color: #ff6b6b; }
+.badge.green { background-color: #66BB6A; }
+
+/* 더보기 버튼 스타일 */
+.show-more-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
+    color: #6c757d;
+    border: 1px solid #dee2e6;
+    border-radius: 30px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .show-more-btn:hover {
+    background-color: #e9ecef;
+  }
+
+  .plus-icon {
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+.search-button {
+    padding: 4px 8px;
+    background-color: #588A87;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* 이미지와 텍스트가 수평으로 정렬되도록 */
+}
+  
+.search-button img {
+    width: 21px; /* 아이콘 크기 조정 */
+    height: 21px;
+}
+  
+
+
+.map {
+    display: flex;
+    justify-content: center; /* 지도 중앙 정렬 */
+    align-items: center;
+    margin-top: 20px;
+    border-radius: 12px; /* 지도 모서리 둥글게 */
+    width: 100%; /* map 컨테이너 너비 */
+    height: 100%; /* map 컨테이너 높이 */
+}
+
+.map-container {
+    width: 40%; /* 지도 컨테이너의 너비 조정 */
+    height: 600px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff; /* 배경색을 흰색으로 변경 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+}
+
+/* App 전체 레이아웃, 기본 스타일, 사이드바 등은 그대로 유지 */
+
+/* Modal 스타일 */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px 40px; /* 패딩을 늘려서 여백 추가 */
+    border-radius: 12px; /* 모서리 둥글게 */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    max-width: 600px;
+    width: 100%;
+    overflow-y: auto;
+    font-family: 'Arial', sans-serif;
+}
+
+.modal-section {
+    margin: 20px 0; /* 섹션 간의 간격 늘림 */
+}
+
+.modal-section label {
+    display: block;
+    font-size: 1.1rem; /* 글자 크기 증가 */
+    font-weight: 600; /* 글자 굵기 강화 */
+    color: #333; /* 글자 색상 검정 */
+    margin-bottom: 8px;
+}
+
+.modal-section select,
+.modal-section textarea {
+    width: 100%;
+    padding: 12px; /* 내부 여백 증가 */
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #f9f9f9; /* 배경색 */
+}
+
+.modal-section select:focus,
+.modal-section textarea:focus {
+    border: 2px solid #588A87; /* 초록색 테두리 */
+}
+
+.star-rating {
+    display: flex;
+    gap: 10px; /* 별 간격을 더 넓게 */
+    margin-top: 10px;
+}
+
+.star-rating span {
+    cursor: pointer;
+    font-size: 2rem; /* 별 크기 증가 */
+    color: #ccc;
+}
+
+.star-rating span.active {
+    color: #ffc400; /* 별의 색상을 노랑색으로 */
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px; /* 위쪽 간격 추가 */
+}
+
+.modal-actions button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.modal-actions button:first-child {
+    background-color: #ccc; /* 취소 버튼 색상 */
+    color: #333;
+}
+
+.modal-actions button:last-child {
+    background-color: #588A87; /* 확인 버튼 색상 */
+    color: #fff;
+}
+
+/* 드롭다운 리스트 스타일 */
+.modal-section select {
+    background-color: #E6F1EF; /* 드롭다운의 배경색 */
+    color: #333;
+}
+
+textarea {
+    resize: none; /* 크기 조정 불가 */
+}
+
+textarea::placeholder {
+    color: #999; /* 플래이스홀더 색상 */
+}
+
+textarea:focus {
+    border: 2px solid #588A87; /* 초록색 테두리 */
+}
+
+/* 버튼 hover 효과 */
+.modal-actions button:hover {
+    opacity: 0.9; /* 버튼을 살짝 어둡게 */
+}
+
+  
+#map {
+    width: 100%; /* 부모 요소의 크기에 맞게 조정 */
+    height: 100%; /* 부모 요소의 높이에 맞게 조정 */
+    border: 2px solid #E8E8E8;
+    border-radius: 10px;
+
+}
+  
+
+.job-list-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 2px solid #E8E8E8; /* 리스트 헤더 아래쪽에 경계선 추가 */
+    background-color: #F7F8FC; 
+}
+
+
+.search-button {
+    padding: 8px 16px;
+    background-color: #588A87;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px; /* 검색 버튼 왼쪽에 약간의 여백 */
+}
+
+.table {
+    margin-top: 20px; /* 테이블 상단의 간격 조정 */
+    width: 100%; /* 테이블을 부모 요소에 맞춤 */
+    background-color: #fff; /* 흰색 배경 추가 */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+    border-radius: 10px; /* 모서리 둥글게 */
+}
+
+/* 잡아주세요 페이지 레이아웃 */
+.jobplease-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-left: 0;
+    margin-top: 30px;
+    width: 100%;
+    padding: 20px;
+    background-color: #F7F8FC;
+}
+
+/* 단계별 진행 바 */
+.step-indicator {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+    padding: 10px 20px;
+    background-color: #ffffff; /* 배경 흰색 */
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+}
+
+.step-number {
+    width: 40px;
+    height: 40px;
+    background-color: #16633A; /* 기본 활성화된 상태의 초록색 배경 */
+    border-radius: 50%; /* 원형으로 만들기 */
+    color: white; /* 기본 글자색 흰색 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.active-step .step-number {
+    background-color: #16633A; /* 활성화된 상태의 배경색 (초록색) */
+    color: white; /* 활성화된 상태의 글자색 (흰색) */
+  }
+  
+  .completed-step .step-number {
+    background-color: #3c3c41;; /* 완료된 상태의 배경색 (회색) */
+    color: #7f7f7f; /* 완료된 상태의 글자색 (어두운 회색) */
+  }
+  
+  .completed-step {
+    color: #a2a2a5; /* 완료된 상태의 텍스트 색상 */
+  }
+
+
+.step-indicator div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-size: 1rem;
+    color: #333; /* 단계 이름 검정색 */
+}
+
+.step-indicator div .step-number {
+    width: 40px; /* 원의 너비 */
+    height: 40px; /* 원의 높이 */
+    background-color: #16633A; /* 초록색 배경 */
+    border-radius: 50%; /* 원형으로 만들기 */
+    color: white; /* 글자색 */
+    display: flex; /* Flexbox 사용 */
+    justify-content: center; /* 가로 정렬 */
+    align-items: center; /* 세로 정렬 */
+    font-size: 1.2rem; /* 글자 크기 */
+    font-weight: bold; /* 글자 굵기 */
+    margin-right: 10px; /* 오른쪽 여백 */
+}
+
+.step-indicator .active-step {
+    color: #588A87;
+}
+
+.step-indicator .completed-step {
+    color: #E1E1E6;
+}
+
+/* 입력 폼 */
+.form-container {
+    width: 100%;
+    padding: 20px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.form-container input, .form-container select {
+    width: 100%; /* 입력 필드가 폼에 맞게 확장되도록 */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    box-sizing: border-box; /* 여백 포함한 크기 계산 */
+}
+
+/* 단계와 입력 폼을 감싸는 네모 상자 스타일 */
+.form-wrapper {
+    border: 1px solid #E8E8E8;  /* 상자 테두리 */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #FFFFFF; /* 배경 흰색 */
+    width: 100%;
+    max-width: 900px;  /* 최대 너비 설정 */
+    margin: 0 auto;  /* 가운데 정렬 */
+}
+
+.form-container h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-container label {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.form-container input, .form-container select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.form-container input:focus, .form-container select:focus {
+    outline: none;
+    border: 1px solid #588A87;
+}
+
+.form-container .error {
+    border: 1px solid #FF6B6B;
+}
+
+.form-container textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    border: 1px solid #CCC;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+}
+
+.form-container textarea:focus {
+    outline: none;
+    border: 1px solid #588A87;
+}
+
+/* 버튼 스타일 */
+.form-container .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #588A87;
+    color: white;
+    font-size: 1rem;
+}
+
+.button:hover {
+    background-color: #66BB6A;
+}
+
+.button.secondary {
+    background-color: #CCC;
+    color: #333;
+}
+
+.button.secondary:hover {
+    background-color: #E9ECEF;
+}
+
+/* 토스트 메시지 */
+.toast-message {
+    background-color: #f99c9c7a;
+    color: #ff0000;
+    padding: 7px 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: none; /* 그림자를 없앰 */
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .address-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 기본 주소 입력과 검색 버튼 사이의 간격 */
+  }
+  
+  .address-input-wrapper input {
+    flex: 1; /* 기본 주소 입력 필드가 버튼보다 넓게 차지하도록 */
+  }
+  
+  .search-button {
+    padding: 8px 16px;
+    background-color: #588A87;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-button:hover {
+    background-color: #466e69; /* 버튼 hover 색상 */
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px; /* 상세 주소 입력 필드에 간격 추가 */
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+  }
+  
+  
+  .custom-bug-input {
+    padding: 10px;
+    background-color: #588A87; /* 기본 색상 적용 */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .custom-bug-input input {
+    flex: 1;
+  }
+  
+  .custom-bug-input button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button-container {
+    margin-top: 20px;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    background-color: #588A87;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #466e69;
+  }
+  
+  
+  .upload-placeholder {
+    cursor: pointer; /* 클릭 가능한 커서 */
+    width: 150px;
+    height: 150px;
+  }
+  
+  .uploaded-image {
+    cursor: pointer; /* 클릭 가능한 커서 */
+    width: 250px;
+    height: 250px;
+    border-radius: 10px;
+    object-fit: contain; /* 이미지가 컨테이너에 맞게 채워짐 */
+  }
+  
+
+  /* 성공 이미지 스타일 */
+.success-image {
+    width: 200px; /* 이미지 크기 조정 */
+    height: auto;
+    margin-bottom: 20px; /* 이미지와 버튼 간의 간격 */
+  }
+  
+  /* 홈으로 버튼 스타일 */
+  .home-button {
+    padding: 10px 20px;
+    background-color: #16633A; /* 초록색 버튼 */
+    color: white; /* 흰색 텍스트 */
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .home-button:hover {
+    background-color: #135029; /* 마우스를 올렸을 때 색상 조금 어둡게 */
+  }
+  
+  /* 버튼 중앙 정렬 */
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+
+/* 업로드 이미지 및 이모티콘이 가운데 정렬되도록 수정 */
+.upload-container,
+.emoji-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px; /* 이미지와 이모티콘 사이 간격 */
+}
+
+/* 이모티콘 그리드: 3행 3열로 가운데 정렬 */
+.emoji-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열로 설정 */
+  gap: 10px; /* 각 이모티콘 간의 간격 줄임 */
+  justify-items: center; /* 각 셀이 가운데 정렬되도록 설정 */
+  margin-top: 20px;
+}
+  
+  /* 이모티콘 셀 스타일 */
+  .emoji-cell {
+    width: 80px;  /* 각 이모티콘의 칸 크기 설정 */
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 선택 시 부드러운 색상 전환 */
+  }
+  
+  /* 선택된 이모티콘은 짙은 회색으로 표시 */
+  .emoji-cell.selected {
+    background-color: #666; 
+  }
+  
+    /* 이모티콘 아이콘 크기 */
+    .emoji-icon {
+        max-width: 70%; /* 칸 내에서 이모티콘 크기 줄임 */
+        max-height: 70%;
+    }
+
+  
+  .button-container .button.secondary {
+    background-color: gray;
+    color: white;
+    cursor: not-allowed;
+  }
+  
+ /* 버튼 스타일: 건너뛰기, 다음 버튼 */
+.button-container .button {
+    background-color: #16633a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .button-container .button:hover {
+    background-color: #135029;
+  }
+  
+  .button-container .button.secondary:disabled {
+    background-color: #747474;
+    cursor: not-allowed;
+  }
+  
