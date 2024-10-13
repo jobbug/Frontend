@@ -4,6 +4,7 @@ import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
 import AddressSearch from './AddressSearch';
 import './Register.css';
+import { apiFetch } from './api';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -49,7 +50,7 @@ const Register = () => {
     const checkNicknameAvailability = () => {
         const nickname = formData.nickname;
         if (nickname) {
-            fetch(`/api/nickname/check?nickname=${nickname}`)
+            apiFetch(`/api/nickname/check?nickname=${nickname}`)
                 .then((response) => response.json())
                 .then((data) => {
                     setIsNicknameAvailable(data.isAvailable);

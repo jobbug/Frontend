@@ -1,6 +1,7 @@
 // src/chat.js
 import React, { useEffect, useState } from 'react';
 import './chat.css';  // chat.css 파일을 import
+import { apiFetch } from './api';
 
 function Chat() {
   const [profileInfo, setProfileInfo] = useState({});
@@ -11,7 +12,7 @@ function Chat() {
     async function loadProfile(isRequestor) {
       let profileData;
       try {
-        const response = await fetch(
+        const response = await apiFetch(
           isRequestor ? '/api/acceptor-profile' : '/api/requestor-profile'
         );
         profileData = await response.json();

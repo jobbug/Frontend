@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './mypage.css'; // CSS 파일 import
+import { apiFetch } from './api';
 
 function MyPage() {
   const [userInfo, setUserInfo] = useState(null);
@@ -12,7 +13,7 @@ function MyPage() {
     // 유저 정보 가져오기
     async function fetchUserInfo() {
       try {
-        const response = await fetch('/api/user', {
+        const response = await apiFetch('/api/user', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -32,7 +33,7 @@ function MyPage() {
     async function fetchRecentAction() {
       try {
         // 진행중인 요청 내역 조회
-        const requestResponse = await fetch('/api/request?status=in_progress', {
+        const requestResponse = await apiFetch('/api/request?status=in_progress', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -42,7 +43,7 @@ function MyPage() {
         const requestResult = await requestResponse.json();
 
         // 진행중인 수락 내역 조회
-        const acceptResponse = await fetch('/api/acceptance?status=in_progress', {
+        const acceptResponse = await apiFetch('/api/acceptance?status=in_progress', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -66,7 +67,7 @@ function MyPage() {
     async function fetchHistory() {
       try {
         // 요청 내역 조회
-        const requestResponse = await fetch('/api/request', {
+        const requestResponse = await apiFetch('/api/request', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -76,7 +77,7 @@ function MyPage() {
         const requestResult = await requestResponse.json();
 
         // 수락 내역 조회
-        const acceptResponse = await fetch('/api/acceptance', {
+        const acceptResponse = await apiFetch('/api/acceptance', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
