@@ -1,0 +1,60 @@
+.register-container {
+    width: 400px;
+    margin: 50px auto;
+    background: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.nickname-input {
+    display: flex;
+    align-items: center;
+}
+
+.address-input {
+    display: flex;
+    align-items: center;
+}
+
+form input {
+    width: calc(100% - 80px); /* 踰꾪듉�� �덈뒗 �낅젰 �꾨뱶�� �덈퉬 議곗젙 */
+    padding: 8px;
+    margin-bottom: 16px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.nickname-input button, .address-input button {
+    margin-left: 10px;
+    background-color: #30a14e;
+    color: white;
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.privacy-section {
+    margin-top: 20px;
+}
+
+.privacy-section a {
+    color: #30a14e;
+}
+
+button:disabled {
+    background-color: #ccc;
+}
+
+p {
+    color: red;
+    font-size: 12px;
+}

@@ -915,4 +915,71 @@ input, select {
     background-color: #747474;
     cursor: not-allowed;
   }
+
+  .login-container {
+    display: flex;
+    justify-content: center;  /* 가로 중앙 정렬 */
+    align-items: center;      /* 세로 중앙 정렬 */
+    height: 100vh;
+    background-color: #f5f7fa;
+    position: relative;
+}
+
+.login-box {
+    text-align: center;
+    background-color: white;
+    padding: 60px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 350px;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+.signup-section {
+    margin-top: 20px;
+}
+
+.signup-link {
+    color: #30a14e;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+.logout-alert {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #f8d7da;
+    color: #721c24;
+    text-align: center;
+    padding: 15px;
+    z-index: 1000;
+  }
+  
+  .logout-alert p {
+    margin: 0;
+  }
+  
+  .logout-alert button {
+    margin: 10px;
+    padding: 10px;
+    background-color: #30a14e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .logout-alert button:hover {
+    background-color: #258b3f;
+  }
+  
   

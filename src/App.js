@@ -1,5 +1,4 @@
-// App.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import './styles.css'; 
 import Home from './home';
@@ -7,27 +6,72 @@ import JobPlease from './jobplease';
 import Chat from './chat';
 import MyPage from './mypage';
 import Modal from './modal';
+import Login from './login';  
+import Register from './register';
 
 function App() {
-  // isModalOpen, modalContent = 모달을 제어하기 위한 상태
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalContent, setModalContent] = useState({ title: '', content: '' });
+  const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태 제어
+  const [modalContent, setModalContent] = useState({ title: '', content: '' });  // 모달 내용 설정
+  const [selectedAddress, setSelectedAddress] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // +버튼 클릭했을 때 Open Modal 함수가 실행되어 모달이 열림
-  const openModal = (title, content) => {
-    setModalContent({ title, content });
-    setIsModalOpen(true);
+  // 로그인 상태 확인
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    console.log("토큰 확인:", token);  // 토큰 확인을 위해 콘솔 로그 추가
+    if (token) {
+      setIsLoggedIn(true); // 로그인 상태로 설정
+    }
+  }, []);
+
+  // 모달을 닫는 함수
+  const closeModal = () => {
+    setIsModalOpen(false); // 모달 닫기
   };
 
-  const [selectedAddress, setSelectedAddress] = useState(null);
+  // 로그아웃 요청 함수
+  const handleLogout = async () => {
+    if (window.confirm("정말 잡버그를 로그아웃 하시겠습니까?")) {
+      const accessToken = localStorage.getItem('accessToken');
+      if (!accessToken) {
+        alert("로그인 상태가 아닙니다.");
+        return;
+      }
 
+      try {
+        const response = await fetch('/api/user/logout', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${accessToken}`, // 토큰을 헤더에 추가
+            'Content-Type': 'application/json',
+          },
+        });
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+        const result = await response.json();
+        if (response.ok && result.code === 200) {
+          // 로그아웃 성공 처리
+          localStorage.removeItem('accessToken'); // 토큰 삭제
+          setIsLoggedIn(false); // 로그인 상태 해제
+          alert("성공적으로 로그아웃되었습니다.");
+          window.location.href = '/login';  // 페이지 리로드 후 로그인 페이지로 이동
+        } else {
+          alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
+        }
+      } catch (error) {
+        console.error("로그아웃 중 에러 발생:", error);
+        alert("로그아웃에 실패했습니다. 네트워크를 확인해주세요.");
+      }
+    }
+  };
+
+  // 모달 열기 함수 (예시)
+  const openModal = (title, content) => {
+    setModalContent({ title, content });
+    setIsModalOpen(true); // 모달 열기
   };
 
   return (
-    <Router>
+    <Router>  {/* 반드시 Router 안에 전체 컴포넌트들이 위치해야 useNavigate가 정상 동작 */}
       <div className="app-container">
         <div className="sidebar">
           <div className="logo">
@@ -59,6 +103,8 @@ function App() {
               </Link>
             </li>
           </ul>
+
+          {/* 카드 영역 (모달 버튼 포함) */}
           <div className="info-cards">
             <div className="card teal">
               <div className="card-header">
@@ -100,23 +146,31 @@ function App() {
               {/* 공통 Header */}
               <header className='header'>
                 <div className="auth-links">
-                  <a href="#">로그인</a>
-                  <a href="#">로그아웃</a>
-                  <a href="#">회원가입</a>
-                  <span>Nick McMillan</span>
-                  <img src={`${process.env.PUBLIC_URL}/images/defaultprofile.svg`} alt="Profile Picture" />
+                  {!isLoggedIn ? (
+                    <>
+                      <Link to="/login">로그인</Link>
+                      <Link to="/register">회원가입</Link>
+                    </>
+                  ) : (
+                    <>
+                      <span>로그인된 사용자</span>
+                      <button onClick={handleLogout} className="logout-btn">로그아웃</button>
+                    </>
+                  )}
                 </div>
               </header>
 
-                <Routes>
-                  <Route path="/home" element={<Home setSelectedAddress={setSelectedAddress} />} />
-                  <Route path="/jobplease" element={<JobPlease />} />
-                  <Route path="/chat" element={<Chat />} />
-                  <Route path="/mypage" element={<MyPage />} />
-                </Routes>
+              <Routes>
+                <Route path="/home" element={<Home setSelectedAddress={setSelectedAddress} />} />
+                <Route path="/jobplease" element={<JobPlease />} />
+                <Route path="/chat" element={<Chat />} />
+                <Route path="/mypage" element={<MyPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </Routes>
             </div>
         </div>
-        
+
         {/* 모달 띄우기 */}
         {isModalOpen && (
           <Modal title={modalContent.title} content={modalContent.content} onClose={closeModal} />
