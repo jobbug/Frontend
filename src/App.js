@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode'; // jwt-decode 패키지에서 named import로 가져오기
 import './styles.css'; 
 import Home from './home';
 import JobPlease from './jobplease';
@@ -14,13 +15,21 @@ function App() {
   const [modalContent, setModalContent] = useState({ title: '', content: '' });  // 모달 내용 설정
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState('');
 
   // 로그인 상태 확인
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
-    console.log("토큰 확인:", token);  // 토큰 확인을 위해 콘솔 로그 추가
     if (token) {
-      setIsLoggedIn(true); // 로그인 상태로 설정
+      try {
+        // 토큰을 확인하여 로그인 상태 유지 및 사용자 정보 업데이트
+        const decodedToken = jwtDecode(token); // jwt-decode를 사용하여 안전하게 디코딩
+        setIsLoggedIn(true);
+        setUserName(decodedToken.name); // 디코딩된 토큰에서 사용자 이름 추출
+      } catch (error) {
+        console.error("토큰 디코딩 중 오류 발생:", error);
+        localStorage.removeItem('accessToken'); // 잘못된 토큰일 경우 삭제
+      }
     }
   }, []);
 
@@ -153,7 +162,7 @@ function App() {
                     </>
                   ) : (
                     <>
-                      <span>로그인된 사용자</span>
+                      <span>{userName}님 환영합니다!</span>
                       <button onClick={handleLogout} className="logout-btn">로그아웃</button>
                     </>
                   )}

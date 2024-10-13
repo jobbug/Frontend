@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
-import { jwtDecode } from 'jwt-decode'; // 변경 사항: {} 안에 jwtDecode 명시
+import { jwtDecode } from 'jwt-decode'; // jwtDecode를 올바르게 import
 import AddressSearch from './AddressSearch';
 import './Register.css';
 
@@ -15,11 +15,35 @@ const Register = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
+    const isValidJwt = (token) => {
+        const parts = token.split('.');
+        return parts.length === 3;  // JWT는 3개의 부분으로 구성됨
+    };
+
+    const decodeToken = (token) => {
+        try {
+            return jwtDecode(token);  // JWT 디코딩
+        } catch (e) {
+            console.error("토큰 디코딩 중 오류 발생:", e);
+            return null;
+        }
+    };
+
     const onGoogleSuccess = (response) => {
-        const decoded = jwtDecode(response.credential);  // JWT 디코딩
-        console.log(decoded);  // 디코딩된 정보를 콘솔에 출력
-        setFormData({ ...formData, name: decoded.name });  // 디코딩된 정보에서 이름을 추출하여 formData에 설정
-        setIsLoggedIn(true);
+        const token = response.credential;
+
+        if (isValidJwt(token)) {
+            const decoded = decodeToken(token);
+            if (decoded) {
+                console.log('Login Success:', decoded);
+                setFormData({ ...formData, name: decoded.name });
+                setIsLoggedIn(true);
+            } else {
+                alert('로그인 중 문제가 발생했습니다. 다시 시도해주세요.');
+            }
+        } else {
+            alert('잘못된 토큰입니다. 다시 시도해 주세요.');
+        }
     };
 
     const checkNicknameAvailability = () => {
