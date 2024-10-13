@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import GoogleLoginButton from './GoogleLoginButton';
 import './styles.css';
 
-const Login = () => {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+const Login = ({isLoggedIn, setIsLoggedIn}) => {
+    // const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [userName, setUserName] = useState('');
     const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ const Login = () => {
                 {isLoggedIn ? (
                     <p>{userName}님 환영합니다!</p>
                 ) : (
-                    <GoogleLoginButton onLoginSuccess={handleLoginSuccess} />
+                    <GoogleLoginButton onLoginSuccess={handleLoginSuccess} setIsLoggedIn={setIsLoggedIn} />
                 )}
 
                 {!isLoggedIn && (

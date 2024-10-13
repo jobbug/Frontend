@@ -1,8 +1,7 @@
 // App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import jwt_decode, { jwtDecode } from 'jwt-decode'; // 기본 내보내기 사용
-import { GoogleOAuthProvider } from '@react-oauth/google'; // GoogleOAuthProvider 추가
+import { jwtDecode } from 'jwt-decode'; // 기본 내보내기 사용
 import './styles.css'; 
 import Home from './home';
 import JobPlease from './jobplease';
@@ -19,10 +18,11 @@ function App() {
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState('');
+  const token = localStorage.getItem('accessToken');
 
   // 로그인 상태 확인
   useEffect(() => {
-    const token = localStorage.getItem('accessToken');
+    
     if (token) {
       try {
         // 토큰을 확인하여 로그인 상태 유지 및 사용자 정보 업데이트
@@ -34,7 +34,7 @@ function App() {
         localStorage.removeItem('accessToken'); // 잘못된 토큰일 경우 삭제
       }
     }
-  }, []);
+  }, [token]);
 
   // 모달을 닫는 함수
   const closeModal = () => {
@@ -84,7 +84,7 @@ function App() {
   };
 
   return (
-    <GoogleOAuthProvider clientId="607941716422-goaocftar6hi9o8e0pv0roh8maqm34kk.apps.googleusercontent.com">
+
       <Router>  {/* 반드시 Router 안에 전체 컴포넌트들이 위치해야 useNavigate가 정상 동작 */}
         <div className="app-container">
           <div className="sidebar">
@@ -179,7 +179,7 @@ function App() {
                   <Route path="/jobplease" element={<JobPlease />} />
                   <Route path="/chat" element={<Chat />} />
                   <Route path="/mypage" element={<MyPage />} />
-                  <Route path="/login" element={<Login />} />
+                  <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
                   <Route path="/register" element={<Register />} />
                 </Routes>
               </div>
@@ -191,7 +191,6 @@ function App() {
           )}
         </div>
       </Router>
-    </GoogleOAuthProvider>
   );
 }
 
