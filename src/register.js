@@ -49,14 +49,30 @@ const Register = () => {
 
     const checkNicknameAvailability = () => {
         const nickname = formData.nickname;
-        if (nickname) {
-            apiFetch(`/api/nickname/check?nickname=${nickname}`)
-                .then((response) => response.json())
-                .then((data) => {
-                    setIsNicknameAvailable(data.isAvailable);
-                });
+        const token = localStorage.getItem('registerToken');  // 로컬 스토리지에서 registerToken을 가져옴
+    
+        if (nickname && token) {  // 닉네임과 registerToken이 있는지 확인
+            apiFetch(`/api/nickname/check?nickname=${nickname}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,  // registerToken을 헤더에 추가
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then((data) => {
+                setIsNicknameAvailable(data.isAvailable);  // 중복 확인 결과 반영
+            })
+            .catch((error) => {
+                console.error("닉네임 중복 확인 에러:", error);
+            });
+        } else {
+            console.error("닉네임이나 registerToken이 없습니다.");
+            console.log('닉네임:', nickname, 'registerToken:', token);
         }
     };
+    
+    
+
 
     const handleAddressSelect = (selectedAddress) => {
         setFormData({ ...formData, address: selectedAddress });
@@ -71,10 +87,35 @@ const Register = () => {
     };
 
     const handleSubmit = () => {
-        if (isNicknameAvailable && isPasswordMatching && isPrivacyChecked) {
-            navigate('/login');
+        const registerToken = localStorage.getItem('registerToken');  // registerToken을 가져옴
+        const userInfo = { ...formData };
+    
+        if (isNicknameAvailable && isPasswordMatching && isPrivacyChecked && registerToken) {
+            // 회원가입 요청
+            apiFetch('/api/user/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${registerToken}`,  // 회원가입 시 registerToken을 헤더에 추가
+                },
+                body: JSON.stringify(userInfo)  // 사용자 정보를 JSON 형식으로 전송
+            })
+            .then(response => {
+                console.log("회원가입 성공:", response);
+    
+                // 회원가입 성공 시 registerToken을 삭제하고 로그인 페이지로 이동
+                localStorage.removeItem('registerToken');  // 더 이상 필요하지 않으므로 registerToken 삭제
+                navigate('/login');  // 로그인 페이지로 이동
+            })
+            .catch(error => {
+                console.error("회원가입 에러:", error);
+            });
+        } else {
+            console.error('회원가입 조건을 충족하지 않았습니다.');
         }
     };
+    
+    
 
     return (
         <div className="register-container">

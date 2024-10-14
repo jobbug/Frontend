@@ -126,7 +126,7 @@ function MyPage() {
       {/* 진행 중인 요청/수락 */}
       <div className="box current-box">
         <div className="status-title">진행 중인 요청/수락</div>
-        <div className="status-action-row"> {/* Flexbox 컨테이너로 상태와 버튼을 같은 라인에 */}
+        <div className="status-action-row">
           {recentAction ? (
             <div className="status-detail">
               {recentAction.type === 'accept'
@@ -136,12 +136,12 @@ function MyPage() {
           ) : (
             <div className="status-detail no-action">진행 중인 요청/수락이 없습니다.</div>
           )}
-          <a href="#" className="detail-button">상세보기</a>
+          <a href={recentAction?.type === 'accept' ? "mycurrentAccept.html" : "mycurrentRequest.html"} className="detail-button">상세보기</a>
         </div>
         <hr className="divider" />
         <div className="badge">
           <div>🏴 바퀴벌레 학살자</div>
-          <div>❤️ 고수</div> {/* 뱃지를 세로로 나열 */}
+          <div>❤️ 고수</div>
         </div>
       </div>
 
@@ -152,11 +152,11 @@ function MyPage() {
         <hr className="divider" />
         {requestHistory.length > 0 ? (
           <ul className="history-list">
-            {requestHistory.map((item) => (
+            {requestHistory.slice(0, 4).map((item) => (
               <li className="history-item" key={item.postId}>
                 <span className="date">{new Date(item.createdAt).toLocaleDateString()}</span>
-                <span className="bug-type">{item.type}</span>
-                <a href="myrequest.html" className="arrow-button">→</a>
+                <span className="bug-type">{item.bug_type}</span>
+                <a href="myrequest.html" className="detail-button">상세보기</a> {/* 여기 상세보기 버튼 추가 */}
               </li>
             ))}
           </ul>
@@ -172,15 +172,15 @@ function MyPage() {
         <hr className="divider" />
         {acceptHistory.length > 0 ? (
           <ul className="history-list">
-            {acceptHistory.map((item) => (
+            {acceptHistory.slice(0, 4).map((item) => (
               <li className="history-item" key={item.postId}>
                 <span className="date">{new Date(item.createdAt).toLocaleDateString()}</span>
-                <span className="bug-type">{item.type}</span>
+                <span className="bug-type">{item.bug_type}</span>
                 <span className="rating">평점: {item.review ? `${item.review.point}/5` : 'N/A'}</span>
                 <button className="success-button">
                   {item.review ? (item.review.isSuccess === 'O' ? '성공' : '실패') : '미완료'}
                 </button>
-                <a href="myaccept.html" className="arrow-button">→</a>
+                <a href="myaccept.html" className="detail-button">상세보기</a> {/* 여기 상세보기 버튼 추가 */}
               </li>
             ))}
           </ul>
