@@ -36,6 +36,10 @@ function App() {
     }
   }, [token]);
 
+  const handleOAuthRedirection = () => {
+    window.location.href = 'https://api.jobbug.site/oauth2/authorization/google';
+  };
+
   // 모달을 닫는 함수
   const closeModal = () => {
     setIsModalOpen(false); // 모달 닫기
@@ -163,8 +167,8 @@ function App() {
                     {!isLoggedIn ? (
                       <>
                         <Link to="/login">로그인</Link>
-                        <Link to="/register">회원가입</Link>
-                      </>
+                        <a href="#" onClick={handleOAuthRedirection}>회원가입</a>
+                        </>
                     ) : (
                       <>
                         <span>{userName}님 환영합니다!</span>

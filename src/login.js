@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import './styles.css';  // 스타일을 적용하려면 필요
 import { useNavigate } from 'react-router-dom';
+import { extractTokenFromUrl, storeToken } from './tokenUtils';  // 유틸리티 함수 import
+
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,19 +14,15 @@ const Login = () => {
     };
 
     useEffect(() => {
-        const queryParams = new URLSearchParams(window.location.search);
-        const token = queryParams.get('token');  // URL에서 token 파라미터 추출
+        const token = extractTokenFromUrl();  // URL에서 token 파라미터 추출
     
         if (token) {
-            // URL에서 'register'가 있으면 처음 로그인으로 간주
-            if (window.location.pathname.includes('register')) {
-                localStorage.setItem('registerToken', token);  // registerToken을 저장
-                console.log('registerToken 저장됨:', token);
+            const isRegister = window.location.pathname.includes('register');
+            storeToken(token, isRegister);  // 토큰 저장 (회원가입인지 여부에 따라 다르게 처리)
+            
+            if (isRegister) {
                 navigate('/register');  // 회원가입 페이지로 이동
             } else {
-                // 이미 로그인된 사용자는 accessToken으로 처리
-                localStorage.setItem('accessToken', token);  // accessToken을 저장
-                console.log('accessToken 저장됨:', token);
                 navigate('/');  // 메인 페이지로 이동
             }
         } else {
