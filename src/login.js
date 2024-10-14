@@ -1,29 +1,26 @@
 import React, { useEffect } from 'react';
-import './styles.css';  // 스타일을 적용하려면 필요
+import './styles.css'; 
 import { useNavigate } from 'react-router-dom';
-import { extractTokenFromUrl, storeToken } from './tokenUtils';  // 유틸리티 함수 import
-
+import { extractTokenFromUrl, storeToken } from './tokenUtils';
 
 const Login = () => {
     const navigate = useNavigate();
 
-    // 구글 로그인 버튼 클릭 시 호출되는 함수
     const handleGoogleLogin = () => {
-        // 구글 OAuth URL로 직접 리디렉션
         window.location.href = 'https://api.jobbug.site/oauth2/authorization/google';
     };
 
     useEffect(() => {
-        const token = extractTokenFromUrl();  // URL에서 token 파라미터 추출
-    
+        const token = extractTokenFromUrl(); 
+
         if (token) {
             const isRegister = window.location.pathname.includes('register');
-            storeToken(token, isRegister);  // 토큰 저장 (회원가입인지 여부에 따라 다르게 처리)
+            storeToken(token, isRegister);
             
             if (isRegister) {
-                navigate('/register');  // 회원가입 페이지로 이동
+                navigate('/register');
             } else {
-                navigate('/');  // 메인 페이지로 이동
+                navigate('/');
             }
         } else {
             console.error('URL에서 토큰이 전달되지 않았습니다.');
